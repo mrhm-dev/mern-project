@@ -98,7 +98,7 @@ module.exports = {
                         activateToken: ''
                     }
                 })
-                console.log(updatedUser)
+
                 let template = welcomeTemplate({name: updatedUser.name, link: 'http://localhost4000'})
                 let mailOption = generateEmailOption({
                     to: updatedUser.email,
@@ -107,7 +107,6 @@ module.exports = {
                 })
                 transporter.sendMail(mailOption, (err, info) => {
                     if (err) return catchError(res, err)
-                    console.log(JSON.stringify(info, 2))
 
                     res.status(200).json({
                         message: 'Account Activated',

@@ -43,7 +43,7 @@ module.exports = {
                     const newUser = await user.save()
 
                     // Generate Email Information
-                    let activateLink = `http://localhost:4000/api/users/activateaccount/${newUser.activateToken}`
+                    let activateLink = `http://localhost:3000/activateaccount/${newUser.activateToken}`
                     let template = verificationTemplate({name: newUser.name, link: activateLink})
                     let mailOption = generateEmailOption({
                         to: newUser.email,
@@ -74,8 +74,10 @@ module.exports = {
 
     async activateAccount(req, res) {
         const token = req.params.token
-        const decode = jwt.verify(token, process.env.SECRET)
-        if (!decode) {
+        let decode = {}
+        try {
+            decode = jwt.verify(token, process.env.SECRET)
+        } catch (error) {
             return catchError(res, new Error('Invalid Token'))
         }
 

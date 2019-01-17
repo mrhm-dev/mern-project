@@ -1,58 +1,44 @@
 import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom'
 import { Container, Row, Col, Form, Button, Alert } from "reactstrap";
+
 import TextInput from "../components/forms/TextInput";
-import registerValidator from "../validators/registerValidator";
+import { register } from "../store/actions/authActions";
 
 class Register extends React.Component {
   state = {
-    name: {
-      value: "",
-      touched: false
-    },
-    email: {
-      value: "",
-      touched: false
-    },
-    password: {
-      value: "",
-      touched: false
-    },
-    confirmPassword: {
-      value: "",
-      touched: false
-    },
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
     error: {}
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (JSON.stringify(nextProps.error) !== JSON.stringify(prevState.error)) {
+      return {
+        error: nextProps.error
+      };
+    }
+    return null;
+  }
+
   changeHandler = event => {
     this.setState({
-      [event.target.name]: {
-        ...this.state[event.target.name],
-        value: event.target.value
-      }
+      [event.target.name]: event.target.value
     });
-  };
-
-  focusHandler = event => {
-    this.setState({
-      [event.target.name]: {
-        ...this.state[event.target.name],
-        touched: true
-      }
-    });
-  };
-
-  blurHandler = event => {
-    let error = registerValidator(this.state);
-    if (Object.keys(error).length > 0) {
-      this.setState({ error });
-    } else {
-      this.setState({ error: {} });
-    }
   };
 
   submitHandler = event => {
     event.preventDefault();
+    let { name, email, password, confirmPassword } = this.state;
+    this.props.register({
+      name,
+      email,
+      password,
+      confirmPassword
+    }, this.props.history);
   };
 
   render() {
@@ -62,59 +48,52 @@ class Register extends React.Component {
         <Row>
           <Col md={{ size: 6, offset: 3 }}>
             <h3>Create Your New Account</h3>
-            <Form>
+            <Form onSubmit={this.submitHandler}>
+              <fieldset disabled={this.props.meta.isLoading}>
               <TextInput
                 name="name"
                 label="What is Your Name"
                 placeholder="Enter Your Name"
-                value={name.value}
-                error={name.touched ? error.name : ""}
+                value={name}
+                error={error.name}
                 changeHandler={this.changeHandler}
-                blurHandler={this.blurHandler}
-                focusHandler={this.focusHandler}
               />
               <TextInput
                 name="email"
                 type="email"
                 label="What is Your Email"
                 placeholder="Enter Your Email"
-                value={email.value}
-                error={email.touched ? error.email : ""}
+                value={email}
+                error={error.email}
                 changeHandler={this.changeHandler}
-                blurHandler={this.blurHandler}
-                focusHandler={this.focusHandler}
               />
               <TextInput
                 name="password"
                 type="password"
                 label="What is Your Name"
                 placeholder="Enter Your Password"
-                value={password.value}
-                error={password.touched ? error.password : ""}
+                value={password}
+                error={error.password}
                 changeHandler={this.changeHandler}
-                blurHandler={this.blurHandler}
-                focusHandler={this.focusHandler}
               />
-                        <TextInput
-                            type='password'
+              <TextInput
+                type="password"
                 name="confirmPassword"
                 label="Recheck Your Password"
                 placeholder="Confirm Your Password"
-                value={confirmPassword.value}
-                error={confirmPassword.touched ? error.confirmPassword : ""}
+                value={confirmPassword}
+                error={error.confirmPassword}
                 changeHandler={this.changeHandler}
-                blurHandler={this.blurHandler}
-                focusHandler={this.focusHandler}
               />
-              <Button color="primary"> Register </Button>
+                <Button color="primary"> Register </Button>
+                </fieldset>
             </Form>
             {Object.keys(error).length > 0 && (
-              <Alert color="danger" className='my-4' >
-                            <ul>
-                                
-                    {Object.keys(error).map(err => {
-                       return <li key={err}> {error[err]} </li>
-                    })}
+              <Alert color="danger" className="my-4">
+                <ul>
+                  {Object.keys(error).map(err => {
+                    return <li key={err}> {error[err]} </li>;
+                  })}
                 </ul>
               </Alert>
             )}
@@ -125,4 +104,12 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+const mapStateToProps = state => ({
+  error: state.error,
+  meta: state.meta
+});
+
+export default connect(
+  mapStateToProps,
+  { register }
+)(withRouter(Register))

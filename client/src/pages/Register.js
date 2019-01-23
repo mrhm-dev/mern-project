@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { Container, Row, Col, Form, Button, Alert } from "reactstrap";
 
 import TextInput from "../components/forms/TextInput";
@@ -86,7 +86,9 @@ class Register extends React.Component {
                 changeHandler={this.changeHandler}
               />
                 <Button color="primary"> Register </Button>
-                </fieldset>
+              </fieldset>
+              <Link to='/login'> Already Have Account? Login Now </Link>
+              
             </Form>
             {Object.keys(error).length > 0 && (
               <Alert color="danger" className="my-4">

@@ -9,8 +9,8 @@ const authReducer = (state = init, action) => {
     switch (action.type) {
         case ActionTypes.SET_USER: {
             return {
-                user: action.payload,
-                isAuthenticated: Object.keys(action.payload).length !== 0
+                user: action.payload.user,
+                isAuthenticated: Object.keys(action.payload.user).length !== 0
             }
         }
         default: return state

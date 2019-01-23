@@ -9,12 +9,15 @@ import Register from "../pages/Register";
 import RegistrationSuccessful from "../pages/RegistrationSuccessful";
 import ActivationPage from "../pages/ActivationPage";
 
+import TopNavbar from './navbar/TopNavbar'
+
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <Container>
+          <TopNavbar />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/login" component={Login} />

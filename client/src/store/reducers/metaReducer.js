@@ -2,7 +2,7 @@ import * as ActionTypes from '../actions/actionTypes'
 
 const init = {
     isLoading: false,
-    toastMessage: 'A Demo Toast Message'
+    toastMessage: ''
 }
 
 const metaReducer = (state = init, action) => {

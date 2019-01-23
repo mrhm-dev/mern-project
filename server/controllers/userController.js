@@ -148,10 +148,10 @@ module.exports = {
             if (!match) return res.status(400).json({message: 'Invalid Password'})
 
             let token = jwt.sign({
-                _id: user._is,
+                _id: user._id,
                 email: user.email,
                 name: user.name
-            }, process.env.SECRET)
+            }, process.env.SECRET, {expiresIn: '2h'})
 
             return res.status(200).json({
                 message: 'Login Successful',

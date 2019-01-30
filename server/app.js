@@ -15,11 +15,14 @@ app.use(bodyParser.json())
 
 // Routers
 app.use('/api/users', require('./routes/userRoutes'))
+app.use('/api/quiz', require('./routes/quizRoutes'))
 app.get('/', (req, res) => {
     res.status(200).json({
         message: 'Server is Running'
     })
 })
+
+// Error Handling
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {

@@ -20,7 +20,7 @@ const userSchema = new Schema({
     accountStatus: String,
     isActivated: Boolean,
     activateToken: String,
-})
+}, { timestamps: true })
 
 const model = mongoose.model('User', userSchema)
 module.exports = model

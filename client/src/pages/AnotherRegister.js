@@ -1,12 +1,12 @@
 import React from "react";
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 import { Container, Row, Col, Form, Button, Alert } from "reactstrap";
 
 import TextInput from "../components/forms/TextInput";
 import registerValidator from "../validators/registerValidator";
-import {register} from '../store/actions/authActions'
+import { register } from "../store/actions/authActions";
 
-class Register extends React.Component {
+class AnotherRegister extends React.Component {
   state = {
     name: {
       value: "",
@@ -27,14 +27,14 @@ class Register extends React.Component {
     error: {}
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (JSON.stringify(nextProps.error) !== JSON.stringify(prevState.error)) {
-      return {
-        error: nextProps.error
-      }
-    }
-    return null
-  }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (JSON.stringify(nextProps.error) !== JSON.stringify(prevState.error)) {
+  //     return {
+  //       error: nextProps.error
+  //     };
+  //   }
+  //   return null
+  // }
 
   changeHandler = event => {
     this.setState({
@@ -65,13 +65,13 @@ class Register extends React.Component {
 
   submitHandler = event => {
     event.preventDefault();
-    let {name, email, password, confirmPassword} = this.state
+    let { name, email, password, confirmPassword } = this.state;
     this.props.register({
       name: name.value,
       email: email.value,
       password: password.value,
       confirmPassword: confirmPassword.value
-    })
+    });
   };
 
   render() {
@@ -114,8 +114,8 @@ class Register extends React.Component {
                 blurHandler={this.blurHandler}
                 focusHandler={this.focusHandler}
               />
-                        <TextInput
-                            type='password'
+              <TextInput
+                type="password"
                 name="confirmPassword"
                 label="Recheck Your Password"
                 placeholder="Confirm Your Password"
@@ -128,12 +128,11 @@ class Register extends React.Component {
               <Button color="primary"> Register </Button>
             </Form>
             {Object.keys(error).length > 0 && (
-              <Alert color="danger" className='my-4' >
-                            <ul>
-                                
-                    {Object.keys(error).map(err => {
-                       return <li key={err}> {error[err]} </li>
-                    })}
+              <Alert color="danger" className="my-4">
+                <ul>
+                  {Object.keys(error).map(err => {
+                    return <li key={err}> {error[err]} </li>;
+                  })}
                 </ul>
               </Alert>
             )}
@@ -146,6 +145,9 @@ class Register extends React.Component {
 
 const mapStateToProps = state => ({
   error: state.error
-})
+});
 
-export default connect(mapStateToProps, {register})(Register);
+export default connect(
+  mapStateToProps,
+  { register }
+)(AnotherRegister);

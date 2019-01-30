@@ -92,7 +92,6 @@ module.exports = {
             }
 
             if (user.activateToken === token) {
-                console.log('token match')
                 const updatedUser = await User.findOneAndUpdate({ email: decode.email }, {
                     $set: {
                         accountStatus: ACTIVE,

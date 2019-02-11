@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
                 message: 'Authentication Failed'
             })
         } 
-
+        
         req.user = user
         next()
     })(req, res, next)

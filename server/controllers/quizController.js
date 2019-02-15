@@ -63,7 +63,6 @@ module.exports = {
             .populate('questions')
         
         res.status(200).json(quiz)
-
     },
     async getQuestions(req, res) {
         let questions = await Question.find()

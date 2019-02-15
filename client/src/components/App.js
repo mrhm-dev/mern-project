@@ -9,6 +9,7 @@ import Register from "../pages/Register";
 import AnotherRegister from "../pages/AnotherRegister";
 import RegistrationSuccessful from "../pages/RegistrationSuccessful";
 import ActivationPage from "../pages/ActivationPage";
+import CreateQuiz from '../pages/CreateQuiz'
 
 import TopNavbar from './navbar/TopNavbar'
 
@@ -26,6 +27,7 @@ class App extends Component {
             <Route path="/another-register" component={AnotherRegister} />
             <Route path="/registration-success" component={RegistrationSuccessful} />
             <Route path="/activateaccount/:token" component={ActivationPage} />
+            <Route path='/quiz/create' component={CreateQuiz} />
           </Switch>
         </Container>
       </BrowserRouter>
@@ -34,3 +36,4 @@ class App extends Component {
 }
 
 export default App;
+

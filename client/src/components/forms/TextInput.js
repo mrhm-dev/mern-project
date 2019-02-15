@@ -15,11 +15,11 @@ const TextInput = ({
     focusHandler
 }) => {
     return (
-        <FormGroup className='my-3'>
-            <Label
+        <FormGroup className='my-2  '>
+            {label && <Label
                 for={name}>
                 {label}
-            </Label>
+            </Label>}
             <Input
                 type={type}
                 name={name}
@@ -39,7 +39,7 @@ const TextInput = ({
 TextInput.propTypes = {
     name: propTypes.string.isRequired,
     type: propTypes.string.isRequired,
-    label: propTypes.string.isRequired,
+    label: propTypes.string,
     placeholder: propTypes.string.isRequired,
     value: propTypes.string,
     error: propTypes.string,
